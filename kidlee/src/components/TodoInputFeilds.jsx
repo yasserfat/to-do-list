@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { addTask, handelEdit } from "../redux/TaskSlice";
 import { useDispatch, useSelector } from "react-redux";
+import parse from "html-react-parser";
+import JoditEditor from "jodit-react";
 export default function TodoInputFeilds() {
+  	const editor = useRef(null);
+    const [content, setContent] = useState("");
   const dispatch = useDispatch();
+const config = {
+  placeholder: "Task description",
+  height: "10px",
+};
   const {
     editedTask,
     isEdited,
@@ -73,20 +81,18 @@ export default function TodoInputFeilds() {
   };
   return (
     <section className="container m-auto text-center w-full sm:w-2/3 md:3/5 lg:1/2 p-6 ">
-      <h1 className="text-3xl font-bold mb-4 text-primary_color">
-        To do list{" "}
-      </h1>
+      <h1 className="text-3xl font-bold mb-4 text-primary_color">To do list</h1>
       <form className="flex flex-col  justify-center gap-6 border p-5 rounded">
         <div className="relative">
           <input
-            type="text"
             value={formData.name}
+            type="text"
             onChange={(e) => handleFormData(e)}
             name="name"
-            className={`transition ease-in-out duration-300 py-3 px-4 ps-11 block w-full bg-gray-100  rounded-lg text-sm focus:border-primary_color focus:border outline-none ${
-              isEmpty.name ? "border border-red-400" : ""
-            }`}
-            placeholder="Task Name"
+            className={`transition ease-in-out duration-500 py-3 px-4 ps-11 block w-full bg-gray-100 rounded-lg text-sm focus:border-primary_color focus:border   outline-none ${
+              isEmpty.description ? "border border-red-400" : ""
+            } `}
+            placeholder="Task name"
           />
           <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
             <svg
@@ -108,33 +114,17 @@ export default function TodoInputFeilds() {
         </div>
 
         <div className="relative">
-          <input
+          <JoditEditor
+            ref={editor}
+            config={config}
             value={formData.description}
-            type="text"
-            onChange={(e) => handleFormData(e)}
-            name="description"
-            className={`transition ease-in-out duration-500 py-3 px-4 ps-11 block w-full bg-gray-100 rounded-lg text-sm focus:border-primary_color focus:border   outline-none ${
-              isEmpty.description ? "border border-red-400" : ""
-            } `}
-            placeholder="Task description"
+
+            
+            onChange={(newContent) => {
+              setFormData((prev) => ({ ...prev, description: newContent }));
+            }}
           />
-          <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z" />
-              <circle cx="16.5" cy="7.5" r=".5" />
-            </svg>
-          </div>
+          
         </div>
 
         <div className=" w-full mx-auto max-w-2xl">
