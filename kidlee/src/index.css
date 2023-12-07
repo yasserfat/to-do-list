@@ -4,3 +4,27 @@
 :root {
   --primary-color:#318CE7
 }
+@include keyframes(fadeInOut) {
+  0% {
+    opacity: 0;
+    @include transform(translate3d(10px, -50%, 0));
+  }
+
+  30% {
+    opacity: 1;
+    @include transform(translate3d(0, -50%, 0));
+  }
+
+  75% {
+    opacity: 1;
+    @include transform(translate3d(0, -50%, 0));
+  }
+
+  100% {
+    opacity: 0;
+    @include transform(translate3d(-10px, -50%, 0));
+  }
+}
+.animated {
+  animation: fadeInOut 2s linear;
+}

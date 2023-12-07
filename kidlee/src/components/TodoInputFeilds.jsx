@@ -1,16 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addTask, handelEdit } from "../redux/TaskSlice";
 import { useDispatch, useSelector } from "react-redux";
-import parse from "html-react-parser";
 import JoditEditor from "jodit-react";
 export default function TodoInputFeilds() {
-  	const editor = useRef(null);
-    const [content, setContent] = useState("");
+  const editor = useRef(null);
   const dispatch = useDispatch();
-const config = {
-  placeholder: "Task description",
-  height: "10px",
-};
+  const config = {
+    placeholder: "Task description",
+    height: "10px",
+  };
   const {
     editedTask,
     isEdited,
@@ -22,14 +20,13 @@ const config = {
     statut: false,
   });
 
-
   const [formData, setFormData] = useState({
     id: "",
     name: "",
     description: "",
     statut: "",
     isCompleted: false,
-    order:0
+    order: 0,
   });
   useEffect(() => {
     setFormData(editedTask);
@@ -77,7 +74,7 @@ const config = {
       }));
     }
 
-   console.log(isEmpty)
+    console.log(isEmpty);
   };
   return (
     <section className="container m-auto text-center w-full sm:w-2/3 md:3/5 lg:1/2 p-6 ">
@@ -118,13 +115,10 @@ const config = {
             ref={editor}
             config={config}
             value={formData.description}
-
-            
             onChange={(newContent) => {
               setFormData((prev) => ({ ...prev, description: newContent }));
             }}
           />
-          
         </div>
 
         <div className=" w-full mx-auto max-w-2xl">

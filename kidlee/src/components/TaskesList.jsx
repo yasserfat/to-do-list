@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AiFillDelete } from "react-icons/ai";
 import { MdEdit } from "react-icons/md";
 import parse from "html-react-parser";
-import JoditEditor from "jodit-react";
+
 
 import {
   deleteTask,
@@ -44,7 +44,7 @@ export default function TaskesList() {
               key={i}
               className="shadow shadow-gray-200 rounded-lg px-6 py-3 bg-gray-100 relative"
             >
-              <span className="absolute bg-primary_color text-white w-5 h-5 flex justify-center items-center rounded-full -top-2 -left-2 text-sm ">
+              <span className="absolute animate-ping  bg-primary_color text-white w-5 h-5 flex justify-center items-center rounded-full -top-2 -left-2 text-sm ">
                 {i + 1}
               </span>
               <div className="flex justify-between">
